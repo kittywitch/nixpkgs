@@ -121,11 +121,13 @@ let
 
       manifestRc = vimUtils.vimrcContent (configurePatched // { customRC = ""; }) ;
       neovimRcContent = vimUtils.vimrcContent configurePatched;
+      inherit (vimUtils) packDir;
     in
     assert withPython2 -> throw "Python2 support has been removed from neovim, please remove withPython2 and extraPython2Packages.";
 
     builtins.removeAttrs args ["plugins"] // {
       wrapperArgs = makeWrapperArgs;
+      inherit packDir;
       inherit neovimRcContent;
       inherit manifestRc;
       inherit python3Env;
